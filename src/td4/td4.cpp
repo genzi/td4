@@ -33,6 +33,7 @@ string Td4::getOpcode(string instruction) {
 
     if("" == opcode) {
         opcode = instructionToOpcodeWithIm[rawInstruction];
+        if("" == opcode) return "";
         reverse(immediate.begin(), immediate.end());
         opcode = regex_replace(opcode,
                                regex("XXXX"),
@@ -47,6 +48,7 @@ string Td4::getInstruction(string opcode) {
 
     if("" == instruction) {
         instruction = opcodeToinstructionWithIm[opcode.substr(4, 4)];
+        if("" == instruction) return "";
         string temp = opcode.substr(0, 4);
         reverse(temp.begin(), temp.end());
         instruction += temp;

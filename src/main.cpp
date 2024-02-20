@@ -1,4 +1,5 @@
 #include "td4/td4.hpp"
+#include "simulator/simulator.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -9,7 +10,7 @@
 
 bool check_cli_args(const std::vector<std::string>& args) {
     return !((args.size() < 3 || args[1] == "-h") ||
-             (args.size() >= 3 && (args[1] != "-d" && args[1] != "-a")));
+             (args.size() >= 3 && (args[1] != "-d" && args[1] != "-a" && args[1] != "-s")));
 }
 
 void print_usage(const std::string& program_name) {
@@ -35,6 +36,14 @@ int check_input_file(const std::string& file_path) {
     return 0;
 }
 
+int simulate(const array<string, 16>& bin, const array<string, 16>& asmsrc) {
+
+    Simulator simulator;
+    simulator.run(bin, asmsrc);
+
+    return 0;
+}
+
 int main(int argc, char *argv[]) {
 
     std::vector<std::string> args(argv, argv+argc);
@@ -47,6 +56,7 @@ int main(int argc, char *argv[]) {
         print_usage(args[0]);
         return 0;
     }
+
     if (check_input_file(args[2]) != 0) {
         return 2;
     }
@@ -68,6 +78,11 @@ int main(int argc, char *argv[]) {
     } else if (args[1] == "-d") {
         status = td4.disassemble(source, out);
         action = "Disassembly";
+    } else if (args[1] == "-s") {
+        status = td4.disassemble(source, out);
+        if (status == Td4::Status::Ok)
+            return simulate(source, out);
+        action = "Simulation disassembly";
     } else {
         status = Td4::Status::Nok;
         action = "Unknown action";

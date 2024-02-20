@@ -1,0 +1,16 @@
+MOV A, 1111
+IN B
+ADD A, 0001
+ADD B, 0001
+JNC 0010
+MOV B, A
+OUT B
+MOV A, 1111
+JMP 0010
+
+
+
+
+
+
+

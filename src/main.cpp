@@ -38,7 +38,7 @@ int check_input_file(const std::string& file_path) {
 
 int simulate(const array<string, 16>& bin, const array<string, 16>& asmsrc) {
 
-    Simulator simulator;
+    Simulator simulator(0b1010);
     simulator.run(bin, asmsrc);
 
     return 0;

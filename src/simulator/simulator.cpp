@@ -2,8 +2,6 @@
 #include <cstring>
 #include <algorithm>
 
-#define NCOLS 80
-#define NROWS 24
 
 void Simulator::execute(std::string opcode) {
     MFP fp = opcodeCallback[opcode.substr(4, 4)];

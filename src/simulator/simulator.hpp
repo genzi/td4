@@ -88,8 +88,8 @@ private:
 
 public:
 
-    Simulator(/* args */) {
-        PC = 0; RA = 0; RB = 0; CF = 0; IN = 10; OUT = 0;
+    Simulator(std::bitset<4> in = 0) : IN(in) {
+        PC = 0; RA = 0; RB = 0; CF = 0; OUT = 0;
         clock = ClockSource::Clock_10Hz;
 
         opcodeCallback.insert(std::make_pair("0000", &Simulator::addA));

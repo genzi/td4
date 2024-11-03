@@ -13,11 +13,12 @@ bool check_cli_args(const std::vector<std::string>& args) {
              (args.size() >= 3 && (args[1] != "-d" && args[1] != "-a" && args[1] != "-s")));
 }
 
-void print_usage(const std::string& program_name) {
-    std::cerr << "Usage: " << endl
-              << "  " << program_name << " -d <file>" << std::endl
-              << "  " << program_name << " -a <file>" << std::endl
-              << "  " << program_name << " -h" << std::endl;
+void print_help(const std::string& program_name) {
+    std::cerr << "Description: " << std::endl
+              << " " << program_name << " -d <file>  Disassembles the given file and writes the result to <file>.a" << std::endl
+              << " " << program_name << " -a <file>  Assembles the given file and writes the result to <file>.out" << std::endl
+              << " " << program_name << " -s <file>  Simulates the given <file>.out and displays the execution" << std::endl
+              << " " << program_name << " -h         Prints this help message" << std::endl;
 }
 
 int check_input_file(const std::string& file_path) {
@@ -48,13 +49,14 @@ int main(int argc, char *argv[]) {
 
     std::vector<std::string> args(argv, argv+argc);
 
-    if (!check_cli_args(args)) {
-        print_usage(args[0]);
-        return 1;
-    }
     if (args[1] == "-h") {
-        print_usage(args[0]);
+        print_help(args[0]);
         return 0;
+    }
+
+    if (!check_cli_args(args)) {
+        print_help(args[0]);
+        return 1;
     }
 
     if (check_input_file(args[2]) != 0) {
